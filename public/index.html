@@ -9,130 +9,28 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-  <title>Game Shop</title>
+    <style type="text/css">
+      .bg-cover {
+        background:linear-gradient(rgba(0,0,0,.85), rgba(0,0,0,.85)), url('/images/fondoLibros.jpg');
+        background-size: 600px;
+      }
+      .bg-dark-trans {
+        background:linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,1));
+      }
+      .bgImg {
+        background:linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/images/BackImage.jpg');
+        background-size: 400px;
+      }
+    </style>
+  <title>Find and Read</title>
 </head>
 
-<body>
-  <!-- <h1>Hello, world!</h1>
-  <div class="container bg-secondary">container</div>
-  <br>
-  <div class="container-fluid bg-secondary">container-fluid</div>
-  <br>
-  <div class="container">
-    <div class="row">
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-      <div class="col-xl-1 col-lg-2 col-md-3 col-sm-4 col-6 border border-dark bg-secondary">
-        .col-xl-1 .col-lg-2 .col-md-3 .col-sm-4 .col-6
-      </div>
-    </div>
-  </div>
-  <br>
-  <div class="container">
-    <div class="row">
-      <div class="col bg-secondary border border-dark">One<br>One<br>One<br></div>
-      <div class="col bg-secondary border border-dark align-self-start">Two</div>
-      <div class="col align-self-center bg-secondary border border-dark">Three</div>
-      <div class="col align-self-end bg-secondary border border-dark">Four</div>
-    </div>
-  </div>
-  <br>
-  <div class="container">
-    <div class="row justify-content-start">
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-    </div>
-    <div class="row justify-content-end">
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-    </div>
-    <div class="row justify-content-around">
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-    </div>
-    <div class="row justify-content-between">
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-      <div class="col-4 bg-secondary border border-dark">One of two columns</div>
-    </div>
-  </div>
-  <br>
-  <div class="d-flex p-2 bg-secondary border border-dark">I'm a flexbox container!</div>
-  <br>
-  <div class="d-inline-flex p-2 bg-secondary border border-dark">I'm an inline flexbox container!</div>
-  <div class="d-flex flex-row  bg-secondary border border-dark p-2">
-    <div class="p-2 bg-secondary border border-dark">Flex item 1</div>
-    <div class="p-2 bg-secondary border border-dark">Flex item 2</div>
-    <div class="p-2 bg-secondary border border-dark">Flex item 3</div>
-  </div>
-  <br>
-  <div class="d-flex flex-row-reverse  bg-secondary border border-dark p-2">
-    <div class="p-2 bg-secondary border border-dark">Flex item 1</div>
-    <div class="p-2 bg-secondary border border-dark">Flex item 2</div>
-    <div class="p-2 bg-secondary border border-dark">Flex item 3</div>
-  </div>
-  <div class="d-flex align-items-start p-2 bg-secondary border border-dark ">
-    <div class="p-2 bg-secondary border border-dark ">Flex item 1<br>Flex item 1<br>Flex item 1</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 2</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 3</div>
-  </div>
-  <div class="d-flex align-items-end p-2 bg-secondary border border-dark ">
-    <div class="p-2 bg-secondary border border-dark ">Flex item 1<br>Flex item 1<br>Flex item 1</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 2</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 3</div>
-  </div>
-  <div class="d-flex align-items-center p-2 bg-secondary border border-dark ">
-    <div class="p-2 bg-secondary border border-dark ">Flex item 1<br>Flex item 1<br>Flex item 1</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 2</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 3</div>
-  </div>
-  <div class="d-flex align-items-baseline p-2 bg-secondary border border-dark ">
-    <div class="p-2 bg-secondary border border-dark ">Flex item 1<br>Flex item 1<br>Flex item 1</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 2</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 3</div>
-  </div>
-  <div class="d-flex align-items-stretch p-2 bg-secondary border border-dark ">
-    <div class="p-2 bg-secondary border border-dark ">Flex item 1<br>Flex item 1<br>Flex item 1</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 2</div>
-    <div class="p-2 bg-secondary border border-dark ">Flex item 3</div>
-  </div>  -->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="/">Game Shop</a>
+<body class="bgImg">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark-trans">
+    <a class="navbar-brand" href="/">
+      <img src="/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+      Find&Read
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -142,143 +40,285 @@
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="dropdown01" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">Cart&nbsp;</a>
+            aria-haspopup="true" aria-expanded="false">Shopping&nbsp;<div class="d-inline bg-dark text-white">&nbsp;10&nbsp;</div>&nbsp;</a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">View</a>
-            <a class="dropdown-item" href="#">Checkout</a>
+            <a class="dropdown-item" href="/cart.html">Cart</a>
+            <a class="dropdown-item" href="/purchase.html">Purchase</a>
           </div>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="dropdown01" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">User&nbsp;</a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">Sign Up</a>
-            <a class="dropdown-item" href="#">Sign In</a>
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Sign Out</a>
+            <a class="dropdown-item" href="/signup.html">Sign Up</a>
+            <a class="dropdown-item" href="/signin.html">Sign In</a>
+            <a class="dropdown-item" href="/profile.html">Profile</a>
+            <a class="dropdown-item" href="/">Sign Out</a>
           </div>
         </li>
       </ul>
     </div>
   </nav>
+
   <header>
-    <p>Sample</p>
-    <div class="jumbotron rounded-0 bg-primary text-light">
+    <div class="jumbotron rounded-0 bg-cover text-light" style="padding-top: 80px; padding-bottom: 30px">
       <div class="container">
         <div class="row">
           <div class="col-sm-12 text-center">
-            <h1 class="display-3">Game Shop Web Site</h1>
-            <p>This Web Site presents a fictional catalogue and shopping cart for the WES Game Shop company</p>
+            <h1 class="display-3">F&R Book Shop</h1>
+            <p>The best online book shop to find the book you are looking for </p>
           </div>
         </div>
       </div>
     </div>
   </header>  
+
   <main>
     <div class="container">
       <div class="row">
-  
         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div class="card text-white bg-primary mb-3">
-            <div class="card-header">Card Primary</div>
+          <div class="card mb-3">
+            <img src="/images/pj_01.jpg" class="card-img-top" alt="Percy Jackson 1">
             <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tincidunt lobortis laoreet. Sed pulvinar
-                sollicitudin neque, ac volutpat leo rhoncus eu. Proin non velit in nisi rutrum euismod. Aliquam mattis
-                nibh ac eros tincidunt fringilla. Aliquam erat volutpat. Mauris vitae iaculis leo. Ut a justo justo.
-                Aenean scelerisque efficitur ante vehicula ullamcorper.</p>
+              <h5 class="card-title">Percy Jackson and the lightning thief</h5>
+              <p class="card-text"><b>Author</b>: Rick Riordan</p>
+              <p class="card-text">Twelve-year-old Percy Jackson is on the most dangerous quest of his life. With the help 
+                of a satyr and a daughter of Athena, Percy must journey across the United States to catch a thief who has 
+                stolen the original weapon of mass destruction: Zeus’ master bolt. Along the way, he must face a host of 
+                mythological enemies determined to stop him. Most of all, he must come to terms with a father he has never 
+                known, and an Oracle that has warned him of betrayal by a friend.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 13,95 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
             </div>
           </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div class="card text-white bg-secondary mb-3">
-            <div class="card-header">Card Secondary</div>
+          <div class="card mb-3">
+            <img src="/images/pj_02.jpg" class="card-img-top" alt="Percy Jackson 2">
             <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">
-                Nulla molestie vel urna ut lacinia. Proin fermentum molestie vestibulum. Aenean non mattis mi, eu
-                feugiat nulla. Morbi sit amet cursus ante. In nec nisl turpis. Pellentesque dictum lectus at justo
-                commodo, eu pulvinar sem placerat. Vivamus eu consectetur augue. In id nisi finibus, dictum sapien non,
-                tempus odio. Cras eu nunc nec lorem sollicitudin pharetra. Quisque ornare felis bibendum viverra
-                accumsan. Mauris ligula orci, feugiat sit amet ornare sed, sagittis vitae justo. Sed a odio id lorem
-                pretium consectetur.
-              </p>
+              <h5 class="card-title">Percy Jackson and the sea of monsters</h5>
+              <p class="card-text"><b>Author</b>: Rick Riordan</p>
+              <p class="card-text">When Thalia’s tree is mysteriously poisoned, the magical borders of Camp Half-Blood begin 
+                to fail. Now Percy and his friends have just days to find the only magic item powerful to save the camp before 
+                it is overrun by monsters. The catch: they must sail into the Sea of Monsters to find it. Along the way, Percy 
+                must stage a daring rescue operation to save his old friend Grover, and he learns a terrible secret about his 
+                own family, which makes him question whether being the son of Poseidon is an honor or a curse.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 13,25 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
             </div>
           </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div class="card text-white bg-success mb-3">
-            <div class="card-header">Card Success</div>
+          <div class="card mb-3">
+            <img src="/images/pj_03.jpg" class="card-img-top" alt="Percy Jackson 3">
             <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">
-                Quisque vehicula, sem sit amet semper ullamcorper, velit odio ullamcorper risus, eu scelerisque risus
-                nisi a arcu. Nullam accumsan ullamcorper massa, sed laoreet magna condimentum non. Fusce viverra diam ut
-                eros euismod tincidunt. Donec convallis diam at libero ultrices, id interdum lectus viverra. Sed mollis
-                arcu nec quam bibendum dictum. Ut vel nulla mattis, venenatis arcu a, blandit purus. Nulla id blandit
-                turpis. In sollicitudin quis risus sit amet vehicula.
-              </p>
+              <h5 class="card-title">Percy Jackson and the titan's curse</h5>
+              <p class="card-text"><b>Author</b>: Rick Riordan</p>
+              <p class="card-text">When Percy Jackson gets an urgent distress call from his friend Grover, he immediately 
+                prepares for battle. He knows he will need his powerful demigod allies at his side, his trusty bronze sword 
+                Riptide, and… a ride from his mom.
+                <br>The demigods rush to the rescue to find that Grover has made an important discovery: two powerful half-bloods 
+                whose parentage is unknown. But that’s not all that awaits them. The titan lord Kronos has devised his most 
+                treacherous plot yet, and the young heroes have just fallen prey.
+                <br>They’re not the only ones in danger. An ancient monster has arisen (one rumored to be so powerful it could 
+                destroy Olympus) and Artemis, the only goddess who might know how to track it, is missing. Now Percy and his friends, 
+                along with the Hunters of Artemis, have only a week to find the kidnapped goddess and solve the mystery of the monster 
+                she was hunting. Along the way, they must face their most dangerous challenge yet: the chilling prophecy of the titan’s curse.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 13,00 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
             </div>
           </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div class="card text-white bg-danger mb-3">
-            <div class="card-header">Card Danger</div>
+          <div class="card mb-3">
+            <img src="/images/pj_04.jpg" class="card-img-top" alt="Percy Jackson 4">
             <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">
-                Quisque vehicula, sem sit amet semper ullamcorper, velit odio ullamcorper risus, eu scelerisque risus
-                nisi a arcu. Nullam accumsan ullamcorper massa, sed laoreet magna condimentum non. Fusce viverra diam ut
-                eros euismod tincidunt. Donec convallis diam at libero ultrices, id interdum lectus viverra. Sed mollis
-                arcu nec quam bibendum dictum. Ut vel nulla mattis, venenatis arcu a, blandit purus. Nulla id blandit
-                turpis. In sollicitudin quis risus sit amet vehicula.
-              </p>
+              <h5 class="card-title">Percy Jackson and the battle of the laberynth</h5>
+              <p class="card-text"><b>Author</b>: Rick Riordan</p>
+              <p class="card-text">Percy Jackson isn’t expecting freshman orientation to be any fun, but when a mysterious 
+                mortal acquaintance appears, pursued by demon cheerleaders, things quickly go from bad to worse.
+                <br>Time is running out for Percy. War between the gods and the Titans is drawing near. Even Camp Half-Blood 
+                isn’t safe, as Kronos’ army prepares to invade its once impenetrable borders. To stop them, Percy and his friends 
+                must set out on a quest through the Labyrinth: a sprawling underground world with surprises and danger at every turn.
+                <br>Along the way Percy will confront powerful enemies, find out the truth about the lost god Pan, and face the Titan 
+                lord Kronos’ most terrible secret. The final war begins… with the Battle of the Labyrinth.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 15,20 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
             </div>
           </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div class="card text-white bg-warning mb-3">
-            <div class="card-header">Card Warning</div>
+          <div class="card mb-3">
+            <img src="/images/pj_05.jpg" class="card-img-top" alt="Percy Jackson 5">
             <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">
-                Etiam vitae ipsum vel purus faucibus luctus. Vivamus sem neque, suscipit at aliquam in, iaculis sed
-                elit. Donec velit libero, ultrices laoreet posuere et, pellentesque vel nibh. Integer iaculis, arcu
-                euismod faucibus mollis, lorem mauris molestie orci, vel mollis velit est sed sem. Fusce elementum nulla
-                tellus, in accumsan leo venenatis sit amet. Cras hendrerit lacus nec facilisis bibendum. Maecenas
-                convallis nunc nec dui luctus, quis semper velit faucibus. Sed sit amet tristique mauris, eu gravida
-                felis. Aenean rutrum et erat quis luctus. Donec varius cursus auctor.
-              </p>
+              <h5 class="card-title">Percy Jackson and the last olympian</h5>
+              <p class="card-text"><b>Author</b>: Rick Riordan</p>
+              <p class="card-text">All year the half-bloods have been preparing for battle against the Titans, knowing the odds of 
+                victory are grim. Kronos’s army is stronger than ever, and with every god and half-blood he recruits, the evil 
+                Titan’s power only grows.
+                <br>While the Olympians struggle to contain the rampaging monster Typhon, Kronos begins his advance on New York 
+                City, where Mount Olympus stands virtually unguarded. Now it’s up to Percy Jackson and an army of young demigods 
+                to stop the Lord of Time. In this momentous final book in the New York Times best-selling Percy Jackson and the 
+                Olympians series, the long-awaited prophecy surrounding Percy’s sixteenth birthday unfolds. And as the battle for 
+                Western civilization rages on the streets of Manhattan, Percy faces a terrifying suspicion that he may be fighting 
+                against his own fate.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 16,00 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
             </div>
           </div>
         </div>
         <div class="col-xl-3 col-lg-4 col-md-6 col-12">
-          <div class="card text-white bg-info mb-3">
-            <div class="card-header">Card Info</div>
+          <div class="card mb-3">
+            <img src="/images/hp_01.jpg" class="card-img-top" alt="Harry Potter 1">
             <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">
-                Suspendisse sed congue ipsum. Nullam fermentum lectus nulla, euismod posuere nisl egestas vel. Aenean
-                pellentesque blandit cursus. Fusce eget erat sed lectus mattis mattis. Vestibulum auctor, nisi quis
-                rutrum luctus, nunc nibh vehicula sem, vel vehicula nunc orci non neque. Praesent vitae tempor velit. In
-                ex quam, cursus nec felis nec, suscipit bibendum nisl. Vestibulum pellentesque facilisis magna, ac
-                tincidunt dolor pellentesque eu. Maecenas sit amet consequat sem, et ultricies sem. Donec pellentesque,
-                mi sed faucibus vulputate, tortor lacus bibendum dui, sit amet pretium ex orci id dui. Vestibulum a odio
-                vel leo dapibus fringilla. Proin non lectus urna.
-              </p>
+              <h5 class="card-title">Harry Potter and the Philosopher's Stone</h5>
+              <p class="card-text"><b>Author</b>: J. K. Rowling</p>
+              <p class="card-text">When mysterious letters start arriving on his doorstep, Harry Potter has never heard of Hogwarts 
+                School of Witchcraft and Wizardry.
+                <br>They are swiftly confiscated by his aunt and uncle.
+                <br>Then, on Harry’s eleventh birthday, a strange man bursts in with some important news: Harry Potter is a wizard 
+                and has been awarded a place to study at Hogwarts.
+                <br>And so the first of the Harry Potter adventures is set to begin.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 7,60 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
             </div>
           </div>
         </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div class="card mb-3">
+            <img src="/images/hp_02.jpg" class="card-img-top" alt="Harry Potter 2">
+            <div class="card-body">
+              <h5 class="card-title">Harry Potter and the Chamber of Secrets</h5>
+              <p class="card-text"><b>Author</b>: J. K. Rowling</p>
+              <p class="card-text">Throughout the summer holidays after his first year at Hogwarts School of Witchcraft and Wizardry, 
+                Harry Potter has been receiving sinister warnings from a house-elf called Dobby.
+                <br>Now, back at school to start his second year, Harry hears unintelligible whispers echoing through the corridors.
+                <br>Before long the attacks begin: students are found as if turned to stone.
+                <br>Dobby’s predictions seem to be coming true.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 8,55 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div class="card mb-3">
+            <img src="/images/hp_03.jpg" class="card-img-top" alt="Harry Potter 3">
+            <div class="card-body">
+              <h5 class="card-title">Harry Potter and the Prisoner of Azkaban</h5>
+              <p class="card-text"><b>Author</b>: J. K. Rowling</p>
+              <p class="card-text">For Harry Potter, it’s the start of another far-from-ordinary year at Hogwarts when the Knight Bus 
+                crashes through the darkness and comes to an abrupt halt in front of him.
+                <br>It turns out that Sirius Black, mass-murderer and follower of Lord Voldemort, has escaped – and they say he is coming 
+                after Harry.
+                <br>In his first Divination class, Professor Trelawney sees an omen of death in Harry’s tea leaves.
+                <br>And perhaps most frightening of all are the Dementors patrolling the school grounds with their soul-sucking kiss – in 
+                search of fresh victims.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 10,00 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div class="card mb-3">
+            <img src="/images/hp_04.jpg" class="card-img-top" alt="Harry Potter 4">
+            <div class="card-body">
+              <h5 class="card-title">Harry Potter and the Goblet of Fire</h5>
+              <p class="card-text"><b>Author</b>: J. K. Rowling</p>
+              <p class="card-text">The rules of the Triwizard Tournament, which is about to take place at Hogwarts, only allow wizards over 
+                the age of seventeen to enter.
+                <br>So Harry can only daydream about winning.
+                <br>Then, to his surprise, on Hallowe’en when the Goblet of Fire makes its selection, his name is picked out of the magical cup.
+                <br>Harry will face life-endangering tasks, dragons and Dark wizards.
+                <br>He’ll have to rely on the help of his friends if he is to make it through the contest alive.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 12,35 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div class="card mb-3">
+            <img src="/images/hp_05.jpg" class="card-img-top" alt="Harry Potter 5">
+            <div class="card-body">
+              <h5 class="card-title">Harry Potter and the Order of the Phoenix</h5>
+              <p class="card-text"><b>Author</b>: J. K. Rowling</p>
+              <p class="card-text">After the Dementors’ attack on his cousin Dudley, Harry knows he is about to become Voldemort’s next target.
+                <br>Although many are denying the Dark Lord’s return, Harry is not alone, and a secret order is gathering at Grimmauld Place to 
+                fight against the Dark forces.
+                <br>Meanwhile, Voldemort’s savage assaults on Harry’s mind are growing stronger every day.
+                <br>He must allow Professor Snape to teach him to protect himself before he runs out of time.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 15,20 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div class="card mb-3">
+            <img src="/images/hp_06.jpg" class="card-img-top" alt="Harry Potter 6">
+            <div class="card-body">
+              <h5 class="card-title">Harry Potter and the Half-Blood Prince</h5>
+              <p class="card-text"><b>Author</b>: J. K. Rowling</p>
+              <p class="card-text">One summer night, when Dumbledore arrives at Privet Drive to collect Harry Potter, his wand hand is blackened 
+                and shrivelled, but he will not reveal why.
+                <br>Rumours and suspicion spread through the wizarding world – it feels as if even Hogwarts itself might be under threat.
+                <br>Harry is convinced that Malfoy bears the Dark Mark: could there be a Death Eater amongst them?
+                <br>He will need powerful magic and true friends as, with the help of Dumbledore, he investigates Voldemort’s darkest secrets.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 12,35 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-6 col-12">
+          <div class="card mb-3">
+            <img src="/images/hp_07.jpg" class="card-img-top" alt="Harry Potter 7">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text"><b>Author</b>: J. K. Rowling</p>
+              <p class="card-text">Harry Potter is leaving Privet Drive for the last time. But as he climbs into the sidecar of Hagrid’s motorbike 
+                and they take to the skies, he knows Lord Voldemort and the Death Eaters will not be far behind.
+                <br>The protective charm that has kept him safe until now is broken. But the Dark Lord is breathing fear into everything he loves. 
+                And he knows he can’t keep hiding.
+                <br>To stop Voldemort, Harry knows he must find the remaining Horcruxes and destroy them.
+                <br>He will have to face his enemy in one final battle.</p>
+            </div>
+            <div class="card-body row justify-content-end">
+              <h3>€ 12,35 &nbsp;</h3>
+              <a href="#" class="btn btn-primary"> &nbsp;Buy &nbsp;</a>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
     <br><br>
   </main>
+
   <footer class="bg-light fixed-bottom border-0">
     <div class="container-fluid">
       <div class="row">
         <div class="col text-center text-dark pt-2">
-          <p><small>Web and Service Engineering Game Shop</small></p>
+          <p><small><b>Find&Read</b> created by <b>Cristian Stanimirov Petrov</b> for Web Engineering and Services 2020</small></p>
         </div>
       </div>
     </div>
