@@ -1,7 +1,16 @@
 <script>
-    function buy_clicked(event, id) {
-        Model.addItem(id);
-        navigateTo("/", event)
+    function buy_clicked(event, _id) {
+        event.preventDefault();
+        Model.buy(_id)
+            .done(function () {
+                navigateTo("/", event);
+            })
+            .fail(function () {
+                console.error('buy error',
+                    error.status,
+                    error.statusText,
+                    error.responseJSON.message);
+            })
     }
 </script>
 
@@ -20,7 +29,8 @@
                         <p class="card-text">{{{description}}}</p>
                         <div class="card-body row justify-content-end">
                             <h4 class="font-weight-bold">{{formatPrice this.price}}</h4>
-                            <a class="btn btn-primary ml-3 {{#unless ../user}} disabled {{/unless}}" onclick="buy_clicked(event, {{_id}})">Buy!</a>
+                            <a class="btn btn-primary ml-3 {{#unless ../user}} disabled {{/unless}}"
+                                onclick="buy_clicked(event, {{_id}})">Buy!</a>
                         </div>
                     </div>
                 </div>

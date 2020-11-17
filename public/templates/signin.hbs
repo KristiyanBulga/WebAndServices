@@ -4,15 +4,18 @@
     var form = document.getElementById('signinForm');
     form.classList.add('was-validated');
     if (form.checkValidity()) {
-      Model.signin($('#email').val(), $('#password').val());
-      if (Model.user){
-        Model.bad_signin = 0;
-        navigateTo('/', event);
-      }
-      else{
-        Model.bad_signin = 1;
-        navigateTo('/signin', event);
-      }
+
+      Model.signin($('#email').val(), $('#password').val())
+        .done(function (user) {
+          Model.user = user;
+          navigateTo('/', event);
+        })
+        .fail(function (error) {
+          console.error('signin error',
+            error.status,
+            error.statusText,
+            error.responseJSON.message);
+        })
     }
     else {
       console.log('invalid')
@@ -30,7 +33,8 @@
         {{#if bad_signin}}<p class="text-danger">Email or password are incorrect</p>{{/if}}
         <form id="signinForm" class="needs-validation" novalidate>
           <div class="form-group">
-            <input type="email" class="form-control" id="email" placeholder="Email address" autofocus="" value="cristian@gmail.com" required>
+            <input type="email" class="form-control" id="email" placeholder="Email address" autofocus=""
+              value="cristian@gmail.com" required>
             <div class="invalid-feedback">
               Email field cannot be empty
             </div>
