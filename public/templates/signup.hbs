@@ -1,0 +1,108 @@
+<script>
+  function signup_clicked(event) {
+    event.preventDefault();
+    var form = document.getElementById('signupForm');
+    form.classList.add('was-validated');
+    if (form.checkValidity()) {
+      if ($('#password').val() == $('#password2').val()) {
+        Model.signup($('#email').val(), $('#password').val(), $('#name').val(), $('#surname').val(), $('#birth').val(), $('#address').val());
+        if (Model.user) {
+          navigateTo('/', event);
+          Model.lastSignup = null;
+        }
+        else {
+          Model.lastSignup = {
+            email: null,
+            password: "ok",
+            name: $('#name').val(),
+            surname: $('#surname').val(),
+            birth: $('#birth').val(),
+            address: $('#address').val(),
+          };
+          navigateTo('/signup', event);
+        }
+      }
+      else {
+        Model.lastSignup = {
+          email: $('#email').val(),
+          password: null,
+          name: $('#name').val(),
+          surname: $('#surname').val(),
+          birth: $('#birth').val(),
+          address: $('#address').val(),
+        };
+        navigateTo('/signup', event);
+      }
+    }
+    else {
+      console.log("Missing Value")
+    }
+  }
+</script>
+{{> navBar this}}
+{{> header this}}
+<main>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-6 col-lg-7 col-md-9 col-12 text-center">
+        <h2>Sign up</h2>
+        <form id="signupForm" class="needs-validation" novalidate>
+          <div class="form-group">
+            <input type="text" id="name" class="form-control" autofocus="" placeholder="Name"
+              {{#if lastSignup}}value={{lastSignup.name}} {{/if}} required>
+            <div class="invalid-feedback">Name field is required</div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="surname" class="form-control" placeholder="Surname"
+              {{#if lastSignup}}value={{lastSignup.surname}} {{/if}}required>
+            <div class="invalid-feedback">Surname field is required</div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="address" class="form-control" placeholder="Address"
+              {{#if lastSignup}}value={{lastSignup.address}} {{/if}}required>
+            <div class="invalid-feedback">Address field is required</div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <label for="birth" class="col-sm-2 col-form-label text-left">Birthday</label>
+              <div class="col-sm-10">
+                <input type="date" id="birth" class="form-control" {{#if lastSignup}}value={{lastSignup.birth}}
+                  {{/if}}required>
+                <div class="invalid-feedback">Birth date is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email"
+              class="form-control {{#if lastSignup}} {{#unless lastSignup.email}} is-invalid {{/unless}}{{/if}}"
+              placeholder="Email address" {{#if lastSignup}}{{#if lastSignup.email}}value={{lastSignup.email}}
+              {{/if}}{{/if}}required>
+            {{#if lastSignup}} {{#unless lastSignup.email}}<div class="invalid-feedback">Email already exists</div>
+            {{/unless}}{{/if}}
+          </div>
+          <div class="form-group">
+            <input type="password" id="password"
+              class="form-control {{#if lastSignup}} {{#unless lastSignup.password}} is-invalid {{/unless}}{{/if}}"
+              placeholder="Password" required>
+          </div>
+          <div class="form-group">
+            <input type="password" id="password2"
+              class="form-control {{#if lastSignup}} {{#unless lastSignup.password}} is-invalid {{/unless}}{{/if}}"
+              placeholder="Confirm Password" required>
+            {{#if lastSignup}} {{#unless lastSignup.password}}
+            <div class="invalid-feedback">Passwords are not equal</div>
+            {{/unless}}
+            {{else}}
+            <div class="invalid-feedback">Passwords fields are required</div>
+            {{/if}}
+          </div>
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary" onclick="signup_clicked(event)">Sign up</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+</main>
+{{> footer this}}

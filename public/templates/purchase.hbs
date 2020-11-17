@@ -1,0 +1,80 @@
+<script>
+  n = new Date();
+  y = n.getFullYear();
+  m = n.getMonth() + 1;
+  d = n.getDate();
+  today = m + "/" + d + "/" + y;
+  document.getElementById("date").innerHTML = today;
+
+  function checkout_clicked(event) {
+    event.preventDefault();
+    var form = document.getElementById('purchaseForm');
+    form.classList.add('was-validated');
+    if (form.checkValidity()) {
+      console.log(Model.purchase(today, $('#address').val(), $('#cardNumber').val(), $('#cardHolder').val()));
+      console.log(Model.orderShown)
+      navigateTo('/order/id/' + Model.orderShown, event);
+    }
+    else {
+      console.log("Missing Value")
+    }
+  }
+</script>
+{{> navBar this}}
+{{> header this}}
+<main>
+  <div class="container">
+    <h2>Purchase</h2>
+    <form id="purchaseForm" class="needs-validation" novalidate>
+      <div class="row">
+        <div class="form-group col-xl-6 col-lg-6 col-12">
+          <b>Date: </b><span id="date"></span>
+        </div>
+        <div class="form-group col-xl-12 col-lg-12 col-12">
+          <input type="text" class="form-control" id="address" placeholder="Address" autofocus required >
+          <div class="invalid-feedback">Address field is required </div>
+        </div>
+        <div class="form-group col-xl-6 col-lg-6 col-12">
+          <input type="number" maxlength="16" class="form-control" id="cardNumber" placeholder="0123456789012345"
+            required>
+          <div class="invalid-feedback">Card number field is required</div>
+        </div>
+        <div class="form-group col-xl-6 col-lg-6 col-12">
+          <input type="text" class="form-control" id="cardHolder" placeholder="Card Holder Name" required>
+          <div class="invalid-feedback">Card holder field is required</div>
+        </div>
+      </div>
+    </form>
+    <hr />
+    <h3>Items</h3>
+    <table class="table bg-whiter">
+      <thead>
+        <tr class="small">
+          <th scope="col">Qty</th>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each user.shoppingCart.items}}
+        <tr class="small">
+          <td>{{qty}}</td>
+          <td>{{title}}</td>
+          <td>{{formatPrice price}}</td>
+          <td>{{formatPrice (multiply2 qty price)}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <br>
+    <p class="text-muted"><b>Subtotal: </b><span id="subtotal">{{formatPrice user.shoppingCart.subtotal}}</span></p>
+    <p class="text-muted"><b>Tax: </b><span id="tax">{{formatPrice user.shoppingCart.tax}}</span></p>
+    <p><b>Total: </b><span id="total">{{formatPrice user.shoppingCart.total}}</span></p>
+    <div class="text-right">
+      <a class="btn btn-primary" onclick="checkout_clicked(event)" role="button" form="purchaseForm"> &nbsp;Checkout &nbsp;</a>
+    </div>
+    <br><br><br>
+  </div>
+</main>
+{{> footer this}}

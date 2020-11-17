@@ -1,0 +1,66 @@
+{{> navBar this}}
+{{> header this}}
+<main>
+  <div class="container">
+    <h2>Profile</h2>
+    <div class="row">
+      <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+        <p><b>Name: </b><span id="showName">{{user.name}}</span></p>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+        <p><b>Surname: </b><span id="showSurname">{{user.surname}}</span></p>
+      </div>
+      <div class="col-xl-4 col-lg-4 col-md-6 col-12">
+        <p><b>Birth: </b><span id="showBirth">{{formatDate user.birth}}</span></p>
+      </div>
+      <div class="col-12">
+        <p><b>Address: </b><span id="showAddress">{{user.address}}</span></p>
+      </div>
+      <div class="col-12">
+        <p><b>Email: </b><span id="showEmail">{{user.email}} </span></p>
+      </div>
+    </div>
+    <hr />
+    <h3>Order list</h3>
+    {{#if user.orders}}
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">
+            <b>Date</b>
+          </div>
+          <div class="col">
+            <b>Number</b>
+          </div>
+          <div class="col">
+            <b>Total</b>
+          </div>
+          <div class="col"></div>
+        </div>
+      </li>
+      {{#each user.orders}}
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col">
+            {{date}}
+          </div>
+          <div class="col">
+            {{_number}}
+          </div>
+          <div class="col">
+            {{formatPrice total}}
+          </div>
+          <div class="col">
+            <a class="btn btn-primary" onclick="navigateTo('/order/id/{{_number}}', event)"> &nbsp;Details&nbsp;</a>
+          </div>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+    {{else}}
+    <br>
+    <h4>No orders yet!</h4>
+    {{/if}}
+    <br><br><br>
+</main>
+{{> footer this}}

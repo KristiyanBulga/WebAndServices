@@ -24,6 +24,9 @@
       .bg-dark-trans {
         background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1));
       }
+      .bg-whiter {
+        background: rgba(255, 255, 255, 0.5);
+      }
       .bgImg {
         background: linear-gradient(
             rgba(255, 255, 255, 0.9),
@@ -59,6 +62,7 @@
       integrity="sha512-zT3zHcFYbQwjHdKjCu6OMmETx8fJA9S7E6W7kBeFxultf75OPTYUJigEKX58qgyQMi1m1EgenfjMXlRZG8BXaw=="
       crossorigin="anonymous"
     ></script>
+
     <script src="/model.js"></script>
 
     <span id="contents"></span>
@@ -66,6 +70,13 @@
     <script>
       Handlebars.registerHelper("formatPrice", function (price) {
         return "€ " + (Math.round(price * 100) / 100).toFixed(2);
+      });
+      Handlebars.registerHelper("multiply2", function (qty, price) {
+        return qty * price;
+      });
+      Handlebars.registerHelper("formatDate", function (date) {
+        var aux = String(date).split("-");
+        return aux[1] + "/" + aux[2] + "/" + aux[0];
       });
     </script>
 
@@ -129,8 +140,20 @@
           render("/templates/index.hbs", "#contents", Model);
         else if ((matching = path.match(/^\/cart$/)))
           render("/templates/cart.hbs", "#contents", Model);
+        else if ((matching = path.match(/^\/order\/id\/(\d*)$/))) {
+          var order = Model.getOrder(matching[1]);
+          if (order) render("/templates/order.hbs", "#contents", Model);
+          else render("/templates/not-found.hbs", "#contents", Model);
+        } else if ((matching = path.match(/^\/profile$/)))
+          render("/templates/profile.hbs", "#contents", Model);
+        else if ((matching = path.match(/^\/purchase$/)))
+          render("/templates/purchase.hbs", "#contents", Model);
+        else if ((matching = path.match(/^\/signin$/)))
+          render("/templates/signin.hbs", "#contents", Model);
+        else if ((matching = path.match(/^\/signup$/)))
+          render("/templates/signup.hbs", "#contents", Model);
         else {
-          console.error(path + " path not found!");
+          render("/templates/not-found.hbs", "#contents", Model);
         }
       }
 
@@ -138,6 +161,7 @@
         window.addEventListener("popstate", (event) => route(), false);
         $.when(
           loadPartial("navBar", "/partials/nav-bar.hbs"),
+          loadPartial("header", "/partials/header.hbs"),
           loadPartial("footer", "/partials/footer.hbs")
         ).done(function () {
           route();

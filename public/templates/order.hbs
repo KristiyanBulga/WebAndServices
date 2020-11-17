@@ -1,0 +1,49 @@
+{{> navBar this}}
+{{> header this}}
+<main>
+  <div class="container">
+    <h2>Order {{orderShown._number}}</h2>
+    <div class="row">
+      <div class="col-12">
+        <p><b>Date: </b><span id="orderDate">{{orderShown.date}}</span></p>
+      </div>
+      <div class="col-12">
+        <p><b>Address: </b><span id="orderAddress">{{orderShown.address}}</span></p>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-12">
+        <p><b>Card holder: </b><span id="cardHolder">{{orderShown.cardHolder}}</span></p>
+      </div>
+      <div class="col-xl-6 col-lg-6 col-12">
+        <p><b>Card number: </b><span id="cardNumber">{{orderShown.cardNumber}}</span></p>
+      </div>
+    </div>
+    <hr />
+    <h3>Product list</h3>
+    <table class="table bg-whiter">
+      <thead>
+        <tr class="small">
+          <th scope="col">Qty</th>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each orderShown.items}}
+        <tr class="small">
+          <td>{{qty}}</td>
+          <td>{{title}}</td>
+          <td>{{formatPrice price}}</td>
+          <td>{{formatPrice (multiply2 qty price)}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <br>
+    <p class="text-muted"><b>Subtotal: </b><span id="subtotal">{{formatPrice orderShown.subtotal}}</span></p>
+    <p class="text-muted"><b>Tax: </b><span id="tax">{{formatPrice orderShown.tax}}</span></p>
+    <p><b>Total: </b><span id="total">{{formatPrice orderShown.total}}</span></p>
+    <br><br><br>
+  </div>
+</main>
+{{> footer this}}
