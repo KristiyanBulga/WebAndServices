@@ -1,28 +1,33 @@
 // Import express module
-var express = require('express');
+var express = require("express");
 
 // Import path module
-var path = require('path');
+var path = require("path");
 
 // Import logger module
-var logger = require('morgan');
+var logger = require("morgan");
 
 // Instantiate the express middleware
 var app = express();
 
 // Load logger module
-app.use(logger('dev'));
+app.use(logger("dev"));
 
 //Set public folder to publish static content
-app.use(express.static(path.join(__dirname ,'public')));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Redirect request to index.html file
+app.get(/\/.*/, function (req, res) {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
 // Adds the / path to the application
-app.get('/', function (req, res) {
-// Sends the Hello World string back to the client
-res.send(`
+app.get("/", function (req, res) {
+  // Sends the Hello World string back to the client
+  res.send(`
 <html>
     <head>
-        <title>Game Shop</title>
+        <title>Book Shop</title>
     </head>
     <body>
         <h1>Hello World</h1>
@@ -32,5 +37,5 @@ res.send(`
 
 // Listen to port 3000
 app.listen(3000, function () {
-console.log('GameShop WebApp listening on port 3000!');
+  console.log("BookShop WebApp listening on port 3000!");
 });
