@@ -1,56 +1,32 @@
+<script>
+    function buy_clicked(event, id) {
+        Model.addItem(id);
+        navigateTo("/", event)
+    }
+</script>
+
 {{> navBar this}}
-<header>
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <p>
-        &nbsp;
-    </p>
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <h1 class="display-3">
-                        Game Shop Web Site
-                    </h1>
-                    <p>
-                        Game Shop Informational WebApp sample for Web Engineering and Services
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+{{> header this}}
 <main>
     <div class="container">
         <div class="row">
             {{#each this.products}}
             <div class="col-xl-3 col-lg-4 col-md-6 col-12 mb-3">
-                <div class="card">
+                <div class="card mb-3">
                     <img src="{{this.url}}" class="card-img-top" alt="{{title}} cover">
                     <div class="card-body">
                         <h5 class="card-title">{{title}}</h5>
-                        <p class="card-text">{{description}}</p>
-                        <div class="d-flex justify-content-end align-items-center">
-                            <div class="font-weight-bold">{{formatPrice this.price}}</div>
-                            <a href="#" class="btn btn-primary ml-3">Buy!</a>
+                        <p class="card-text"><b>Author</b>: {{author}}</p>
+                        <p class="card-text">{{{description}}}</p>
+                        <div class="card-body row justify-content-end">
+                            <h4 class="font-weight-bold">{{formatPrice this.price}}</h4>
+                            <a class="btn btn-primary ml-3 {{#unless ../user}} disabled {{/unless}}" onclick="buy_clicked(event, {{_id}})">Buy!</a>
                         </div>
                     </div>
                 </div>
             </div>
             {{/each}}
         </div>
-        {{#cardGrid this.products}}
-        <div class="card">
-            <img src="{{this.url}}" class="card-img-top" alt="{{title}} cover">
-            <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
-                <p class="card-text">{{description}}</p>
-                <div class="d-flex justify-content-end align-items-center">
-                    <div class="font-weight-bold">{{formatPrice this.price}}</div><a href="#"
-                        class="btn btn-primary ml-3">Buy</a>
-                </div>
-            </div>
-        </div>
-        {{/cardGrid}}
     </div>
     <br />
     <br />

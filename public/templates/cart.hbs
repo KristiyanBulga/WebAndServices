@@ -1,86 +1,63 @@
+<script>
+    function buy_clicked(event, id, removeOne){
+        Model.delItem(id, removeOne);
+        navigateTo("/cart", event)
+    }
+</script>
 {{> navBar this}}
-<header>
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <p>&nbsp;</p>
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <h1 class="display-3">Game Shop Web Site</h1>
-                    <p>Game Shop Informational WebApp sample for Web Engineering and Services</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+{{> header this}}
 <main>
     <div class="container">
-        <div class="row">
-            <div class="justify-content-center w-75 mx-auto">
-                <h2 class="">Shopping Cart</h2>
-                <p class="text-right"><b>Total €</b>&nbsp;36.3</p>
-                <h2 class="">Items</h2>
-                <table class="table">
-                    <thead>
-                        <tr class="small">
-                            <th scope="col">Qty</th>
-                            <th scope="col">Product</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="small">
-                            <td>1</td>
-                            <td>Product 1</td>
-                            <td>Price</td>
-                            <td>Total</td>
-                            <td>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-danger dropdown-toggle btn-sm" type="button"
-                                            data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">Remove</button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item">One</a>
-                                            <a class="dropdown-item">All</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="small">
-                            <td>1</td>
-                            <td>Product 2</td>
-                            <td>Price</td>
-                            <td>Total</td>
-                            <td>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-danger dropdown-toggle btn-sm" type="button"
-                                            data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="true">Remove</button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item">One</a>
-                                            <a class="dropdown-item">All</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p><b>Subtotal: €</b>&nbsp;30</p>
-                <p><b>Tax: €</b>&nbsp;6.3</p>
-                <p><b>Total: €</b>&nbsp;36.3</p>
-                <div class="d-flex justify-content-end"> <a class="btn btn-primary" href="purchase.html"
-                        role="button">Purchase</a> </div>
-
-            </div>
+        <h2>Shopping cart</h2>
+        {{#if user.shoppingCart.items}}
+        <div class="text-right">
+            <b>Total: </b><span>{{formatPrice user.shoppingCart.total}}</span>
         </div>
-    </div>
-    </div>
-    <br><br>
+        <h3>Items</h3>
+        <table class="table bg-whiter">
+            <thead>
+                <tr class="small">
+                    <th scope="col">Qty</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each user.shoppingCart.items}}
+                <tr class="small">
+                    <td>{{qty}}</td>
+                    <td>{{title}}</td>
+                    <td>{{formatPrice price}}</td>
+                    <td>{{formatPrice (multiply2 qty price)}}</td>
+                    <td>
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger dropdown-toggle btn-sm" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Remove</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" onclick="buy_clicked(event, {{id}}, 1)">One</a>
+                                    <a class="dropdown-item" onclick="buy_clicked(event, {{id}}, 0)">All</a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <br>
+        <p class="text-muted"><b>Subtotal: </b><span id="subtotal">{{formatPrice user.shoppingCart.subtotal}}</span></p>
+        <p class="text-muted"><b>Tax: </b><span id="tax">{{formatPrice user.shoppingCart.tax}}</span></p>
+        <p><b>Total: </b><span id="total">{{formatPrice user.shoppingCart.total}}</span></p>
+        <div class="text-right">
+            <a href="/purchase" class="btn btn-primary" onclick="navigateTo('/purchase', event)"> &nbsp;Purchase
+                &nbsp;</a>
+        </div>
+        {{else}} <br>
+        <h4>No books in the shopping cart yet</h4>
+        {{/if}}
+        <br><br><br>
 </main>
 {{> footer this}}
