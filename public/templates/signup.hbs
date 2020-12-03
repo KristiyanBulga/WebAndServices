@@ -5,12 +5,12 @@
     form.classList.add('was-validated');
     if (form.checkValidity()) {
       if ($('#password').val() == $('#password2').val()) {
-        Model.signup($('#email').val(), $('#password').val(), $('#name').val(), $('#surname').val(), $('#birth').val(), $('#address').val());
-        if (Model.user) {
+        Model.signup($('#email').val(), $('#password').val(), $('#name').val(), $('#surname').val(), $('#birth').val(), $('#address').val()).done(function (user) {
+          Model.user = user;
+          Messages.success.push(`Welcome for first time ${user.name} ${user.surname}`)
           navigateTo('/', event);
-          Model.lastSignup = null;
-        }
-        else {
+        }).fail(function (error) {
+          Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
           Model.lastSignup = {
             email: null,
             password: "ok",
@@ -20,7 +20,7 @@
             address: $('#address').val(),
           };
           navigateTo('/signup', event);
-        }
+        });
       }
       else {
         Model.lastSignup = {
@@ -31,6 +31,7 @@
           birth: $('#birth').val(),
           address: $('#address').val(),
         };
+        Messages.danger.push(`Passwords were not equals`);
         navigateTo('/signup', event);
       }
     }
@@ -41,6 +42,7 @@
 </script>
 {{> navBar this}}
 {{> header this}}
+{{> messages this}}
 <main>
   <div class="container">
     <div class="row justify-content-center">
@@ -48,53 +50,36 @@
         <h2>Sign up</h2>
         <form id="signupForm" class="needs-validation" novalidate>
           <div class="form-group">
-            <input type="text" id="name" class="form-control" autofocus="" placeholder="Name"
-              {{#if lastSignup}}value={{lastSignup.name}} {{/if}} required>
+            <input type="text" id="name" class="form-control" autofocus="" placeholder="Name" value="User" required>
             <div class="invalid-feedback">Name field is required</div>
           </div>
           <div class="form-group">
-            <input type="text" id="surname" class="form-control" placeholder="Surname"
-              {{#if lastSignup}}value={{lastSignup.surname}} {{/if}}required>
+            <input type="text" id="surname" class="form-control" placeholder="Surname" value="Surname" required>
             <div class="invalid-feedback">Surname field is required</div>
           </div>
           <div class="form-group">
-            <input type="text" id="address" class="form-control" placeholder="Address"
-              {{#if lastSignup}}value={{lastSignup.address}} {{/if}}required>
+            <input type="text" id="address" class="form-control" placeholder="Address" value="User address" required>
             <div class="invalid-feedback">Address field is required</div>
           </div>
           <div class="form-group">
             <div class="row">
               <label for="birth" class="col-sm-2 col-form-label text-left">Birthday</label>
               <div class="col-sm-10">
-                <input type="date" id="birth" class="form-control" {{#if lastSignup}}value={{lastSignup.birth}}
-                  {{/if}}required>
+                <input type="date" id="birth" class="form-control" required>
                 <div class="invalid-feedback">Birth date is required</div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <input type="email" id="email"
-              class="form-control {{#if lastSignup}} {{#unless lastSignup.email}} is-invalid {{/unless}}{{/if}}"
-              placeholder="Email address" {{#if lastSignup}}{{#if lastSignup.email}}value={{lastSignup.email}}
-              {{/if}}{{/if}}required>
-            {{#if lastSignup}} {{#unless lastSignup.email}}<div class="invalid-feedback">Email already exists</div>
-            {{/unless}}{{/if}}
+            <input type="email" id="email" class="form-control " placeholder="Email address" value="cristian@gmail.com" required>
+            <div class="invalid-feedback">Email already exists</div>
           </div>
           <div class="form-group">
-            <input type="password" id="password"
-              class="form-control {{#if lastSignup}} {{#unless lastSignup.password}} is-invalid {{/unless}}{{/if}}"
-              placeholder="Password" required>
+            <input type="password" id="password" class="form-control " placeholder="Password" required>
           </div>
           <div class="form-group">
-            <input type="password" id="password2"
-              class="form-control {{#if lastSignup}} {{#unless lastSignup.password}} is-invalid {{/unless}}{{/if}}"
-              placeholder="Confirm Password" required>
-            {{#if lastSignup}} {{#unless lastSignup.password}}
-            <div class="invalid-feedback">Passwords are not equal</div>
-            {{/unless}}
-            {{else}}
+            <input type="password" id="password2" class="form-control " placeholder="Confirm Password" required>
             <div class="invalid-feedback">Passwords fields are required</div>
-            {{/if}}
           </div>
           <div class="text-right">
             <button type="submit" class="btn btn-primary" onclick="signup_clicked(event)">Sign up</button>

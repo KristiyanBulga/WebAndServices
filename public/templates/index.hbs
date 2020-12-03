@@ -1,21 +1,21 @@
 <script>
     function buy_clicked(event, _id) {
         event.preventDefault();
+        console.log("Added")
         Model.buy(_id)
-            .done(function () {
+            .done(function (book) {
+                Messages.success.push(`${book.title} was added to the shopping cart`)
                 navigateTo("/", event);
             })
             .fail(function () {
-                console.error('buy error',
-                    error.status,
-                    error.statusText,
-                    error.responseJSON.message);
+                Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
             })
     }
 </script>
 
 {{> navBar this}}
 {{> header this}}
+{{> messages this}}
 <main>
     <div class="container">
         <div class="row">

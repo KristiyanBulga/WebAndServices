@@ -37,6 +37,7 @@
       }
     </style>
     <title>Find and Read</title>
+    <script src="/messages.js"></script>
   </head>
 
   <body class="bgImg">
@@ -135,6 +136,12 @@
         var matching = null;
         console.log("Routing ", path);
         var context = {};
+        context.messages = {
+          success: Messages.success,
+          danger: Messages.danger,
+        };
+        Messages.clear();
+
         var p = Model.getUserCartQty()
           .done(function (userCartQty) {
             context.user = userCartQty;
@@ -182,24 +189,69 @@
               });
             });
         else if ((matching = path.match(/^\/order\/id\/(\d*)$/))) {
-          var order = Model.getOrder(matching[1]);
-          context.order = order;
-          if (order)
-            return p.always(function () {
-              render("/templates/order.hbs", "#contents", context);
+          return Model.getOrder(matching[1])
+            .done(function (result) {
+              context.orderShown = result;
+              console.log("result", result);
+            })
+            .fail(function (error) {
+              console.error(error);
+            })
+            .always(function () {
+              if (context.orderShown)
+                return p.always(function () {
+                  render("/templates/order.hbs", "#contents", context);
+                });
+              else
+                return p.always(function () {
+                  render("/templates/not-found.hbs", "#contents", context);
+                });
             });
-          else
-            return p.always(function () {
-              render("/templates/not-found.hbs", "#contents", context);
-            });
+          // var order = Model.getOrder(matching[1]);
+          // context.orderShown = order;
+          // if (order)
+          //   return p.always(function () {
+          //     render("/templates/order.hbs", "#contents", context);
+          //   });
+          // else
+          //   return p.always(function () {
+          //     render("/templates/not-found.hbs", "#contents", context);
+          //   });
         } else if ((matching = path.match(/^\/profile$/)))
-          return p.always(function () {
-            render("/templates/profile.hbs", "#contents", context);
-          });
+          return Model.getProfile()
+            .done(function (result) {
+              context.user = result;
+            })
+            .fail(function (error) {
+              console.error(error);
+            })
+            .always(function () {
+              return Model.getOrders()
+                .done(function (result) {
+                  context.user.orders = result;
+                })
+                .fail(function (error) {
+                  console.error(error);
+                })
+                .always(function () {
+                  return p.always(function () {
+                    render("/templates/profile.hbs", "#contents", context);
+                  });
+                });
+            });
         else if ((matching = path.match(/^\/purchase$/)))
-          return p.always(function () {
-            render("/templates/purchase.hbs", "#contents", context);
-          });
+          return Model.getCart()
+            .done(function (result) {
+              context.user.shoppingCart = result;
+            })
+            .fail(function (error) {
+              console.error(error);
+            })
+            .always(function () {
+              return p.always(function () {
+                render("/templates/purchase.hbs", "#contents", context);
+              });
+            });
         else if ((matching = path.match(/^\/signin$/)))
           return p.always(function () {
             render("/templates/signin.hbs", "#contents", context);
@@ -220,7 +272,8 @@
         $.when(
           loadPartial("navBar", "/partials/nav-bar.hbs"),
           loadPartial("header", "/partials/header.hbs"),
-          loadPartial("footer", "/partials/footer.hbs")
+          loadPartial("footer", "/partials/footer.hbs"),
+          loadPartial("messages", "/partials/messages.hbs")
         ).done(function () {
           route();
         });
