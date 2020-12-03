@@ -127,6 +127,7 @@ Model.users = [
 ];
 
 // Functions
+// If user exists, it is signed in
 Model.signin = function (email, password) {
   Model.user = null;
   for (var user of this.users) {
@@ -138,10 +139,12 @@ Model.signin = function (email, password) {
   return Model.user;
 };
 
+// This function signs out from the server side
 Model.signout = function () {
   Model.user = null;
 };
 
+// This function tries to sign up a new user
 Model.signup = function (email, password, name, surname, birth, address) {
   newId = this.findEmail(email);
   if (newId) {
@@ -157,8 +160,9 @@ Model.signup = function (email, password, name, surname, birth, address) {
       orders: [],
     };
     this.users.push(user);
-    this.signin(email, password);
-    // Implement a save of the shoppingCart and products
+    return this.signin(email, password);
+  } else {
+    return null;
   }
 };
 
@@ -176,84 +180,6 @@ Model.findEmail = function (email) {
   return id_max + 1;
 };
 
-Model.addItem = function (id) {
-  added = false;
-  var price;
-  for (var item of this.user.shoppingCart.items) {
-    if (item.id == id) {
-      item.qty += 1;
-      added = true;
-      price = item.price;
-    }
-  }
-  if (!added) {
-    var title;
-    for (var book of this.products) {
-      if (book._id == id) {
-        title = book.title;
-        price = book.price;
-      }
-    }
-    var item = {
-      qty: 1,
-      id: id,
-      title: title,
-      price: price,
-    };
-    this.user.shoppingCart.items.push(item);
-  }
-  this.user.shoppingCart.qty += 1;
-  this.user.shoppingCart.total += price;
-  this.user.shoppingCart.subtotal = this.user.shoppingCart.total / 1.21;
-  this.user.shoppingCart.tax =
-    this.user.shoppingCart.total - this.user.shoppingCart.subtotal;
-  console.log(this.user.shoppingCart);
-};
-
-Model.delItem = function (id, removeOne) {
-  if (removeOne) {
-    for (var item of this.user.shoppingCart.items) {
-      if (item.id == id) {
-        item.qty -= 1;
-        this.user.shoppingCart.total -= item.price;
-        this.user.shoppingCart.qty -= 1;
-        if (item.qty == 0) {
-          removeOne = 0;
-        }
-      }
-    }
-  }
-  if (!removeOne) {
-    index = -1;
-    for (i = 0; i < this.user.shoppingCart.items.length; i++) {
-      if (this.user.shoppingCart.items[i].id == id) {
-        index = i;
-      }
-    }
-    this.user.shoppingCart.qty -= this.user.shoppingCart.items[index].qty;
-    this.user.shoppingCart.total -=
-      this.user.shoppingCart.items[index].qty *
-      this.user.shoppingCart.items[index].price;
-    if (index > -1) {
-      this.user.shoppingCart.items.splice(index, 1);
-    }
-  }
-  this.user.shoppingCart.subtotal = this.user.shoppingCart.total / 1.21;
-  this.user.shoppingCart.tax =
-    this.user.shoppingCart.total - this.user.shoppingCart.subtotal;
-};
-
-Model.getOrder = function (number) {
-  if (this.user && this.user.orders) {
-    for (var i in this.user.orders) {
-      if (this.user.orders[i]._number == number) {
-        this.orderShown = this.user.orders[i];
-        return this.user.orders[i];
-      }
-    }
-  }
-};
-
 // Obtain the user object
 Model.getUserById = function (userid) {
   for (var i = 0; i < Model.users.length; i++) {
@@ -262,19 +188,21 @@ Model.getUserById = function (userid) {
   return null;
 };
 
-// Return the cart qty if user is in the system
+// Return the user's cart qty
 Model.getUserCartQty = function (userid) {
   var user = Model.getUserById(userid);
   if (user) return { shoppingCart: { qty: user.shoppingCart.qty } };
   else return null;
 };
 
+// Return the product with id: pid
 Model.getProductById = function (pid) {
   for (var i = 0; i < Model.products.length; i++)
     if (Model.products[i]._id == pid) return Model.products[i];
   return null;
 };
 
+// Add product to the user's cart
 Model.buy = function (uid, pid) {
   var product = Model.getProductById(pid);
   var user = Model.getUserById(uid);
@@ -294,27 +222,30 @@ Model.buy = function (uid, pid) {
     item.price = product.price;
     item.total = item.qty * item.price;
     this.updateShoppingCart(user);
-    return user.shoppingCart;
+    return product;
   } else return null;
 };
 
+// Update the shopping cart info
 Model.updateShoppingCart = function (user) {
   user.shoppingCart.qty = 0;
-  user.shoppingCart.subtotal = 0;
+  user.shoppingCart.total = 0;
   for (var i = 0; i < user.shoppingCart.items.length; i++) {
     user.shoppingCart.qty =
       user.shoppingCart.qty + user.shoppingCart.items[i].qty;
-    user.shoppingCart.subtotal =
-      user.shoppingCart.subtotal + user.shoppingCart.items[i].total;
+    user.shoppingCart.total =
+      user.shoppingCart.total + user.shoppingCart.items[i].total;
   }
+  user.shoppingCart.subtotal = user.shoppingCart.total / 1.21;
   user.shoppingCart.tax = user.shoppingCart.subtotal * 0.21;
-  user.shoppingCart.total = user.shoppingCart.subtotal + user.shoppingCart.tax;
 };
 
+// Return the user's shopping cart
 Model.getCartByUserId = function (uid) {
   return Model.getUserById(uid).shoppingCart;
 };
 
+// Remove one product from the user's shopping cart
 Model.removeOne = function (uid, pid) {
   var product = Model.getProductById(pid);
   var user = Model.getUserById(uid);
@@ -335,11 +266,93 @@ Model.removeOne = function (uid, pid) {
   return user.shoppingCart;
 };
 
-// VARIABLES
-Model.bad_signin = 0;
+// Remove all the products of the same type from the user's shopping cart
+Model.removeAll = function (uid, pid) {
+  var product = Model.getProductById(pid);
+  var user = Model.getUserById(uid);
+  if (!product || !user) return null;
+  for (var i = 0; i < user.shoppingCart.items.length; i++) {
+    if (user.shoppingCart.items[i].product == pid) {
+      user.shoppingCart.items.splice(i, 1);
+    }
+  }
+  this.updateShoppingCart(user);
+  return user.shoppingCart;
+};
 
-Model.lastSignup = null;
+// Return the user's profile
+Model.getProfileByUserId = function (uid) {
+  u = Model.getUserById(uid);
+  profile = {
+    name: u.name,
+    surname: u.surname,
+    birth: u.birth,
+    address: u.address,
+    email: u.email,
+    shoppingCart: {
+      qty: u.shoppingCart.qty,
+    },
+  };
+  return profile;
+};
 
-Model.orderShown = null;
+// Return the user's orders
+Model.getOrdersByUserId = function (uid) {
+  return Model.getUserById(uid).orders;
+};
+
+// Create a new order with the products on the shopping cart
+Model.purchase = function (userid, date, address, cardNumber, cardHolder) {
+  var user = Model.getUserById(userid);
+  if (user) {
+    var id_order = new Date().getTime();
+    var order = {
+      _number: id_order,
+      date: date,
+      address: address,
+      cardNumber: cardNumber,
+      cardHolder: cardHolder,
+      subtotal: user.shoppingCart.subtotal,
+      tax: user.shoppingCart.tax,
+      total: user.shoppingCart.total,
+      items: [],
+    };
+    for (var item of user.shoppingCart.items) {
+      var book = {
+        qty: item.qty,
+        title: item.title,
+        price: item.price,
+      };
+      order.items.push(book);
+    }
+    user.orders.push(order);
+    user.shoppingCart = {
+      items: [],
+      qty: 0,
+      total: 0,
+      subtotal: 0,
+      tax: 0,
+    };
+    return order._number;
+  } else {
+    return null;
+  }
+};
+
+// Returns the user's number order
+Model.getOrder = function (userid, number) {
+  var user = Model.getUserById(userid);
+  if (user) {
+    for (var i in user.orders) {
+      if (user.orders[i]._number == number) {
+        console.log(user.orders[i]);
+        return user.orders[i];
+      }
+    }
+    return null;
+  } else {
+    return null;
+  }
+};
 
 module.exports = Model;

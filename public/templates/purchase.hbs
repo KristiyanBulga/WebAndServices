@@ -11,9 +11,13 @@
     var form = document.getElementById('purchaseForm');
     form.classList.add('was-validated');
     if (form.checkValidity()) {
-      console.log(Model.purchase(today, $('#address').val(), $('#cardNumber').val(), $('#cardHolder').val()));
-      console.log(Model.orderShown)
-      navigateTo('/order/id/' + Model.orderShown, event);
+      Model.purchase(today, $('#address').val(), $('#cardNumber').val(), $('#cardHolder').val()).done(function (orderId) {
+        Messages.success.push(`Purchase done correctly`)
+        navigateTo('/order/id/' + orderId, event);
+      }).fail(function (error) {
+        Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
+        navigateTo('/purchase', event);
+      });
     }
     else {
       console.log("Missing Value")
@@ -22,6 +26,7 @@
 </script>
 {{> navBar this}}
 {{> header this}}
+{{> messages this}}
 <main>
   <div class="container">
     <h2>Purchase</h2>
@@ -31,16 +36,17 @@
           <b>Date: </b><span id="date"></span>
         </div>
         <div class="form-group col-xl-12 col-lg-12 col-12">
-          <input type="text" class="form-control" id="address" placeholder="Address" autofocus required >
+          <input type="text" class="form-control" id="address" placeholder="Address" value="User address" autofocus
+            required>
           <div class="invalid-feedback">Address field is required </div>
         </div>
         <div class="form-group col-xl-6 col-lg-6 col-12">
           <input type="number" maxlength="16" class="form-control" id="cardNumber" placeholder="0123456789012345"
-            required>
+            value="1111222233334444" required>
           <div class="invalid-feedback">Card number field is required</div>
         </div>
         <div class="form-group col-xl-6 col-lg-6 col-12">
-          <input type="text" class="form-control" id="cardHolder" placeholder="Card Holder Name" required>
+          <input type="text" class="form-control" id="cardHolder" placeholder="Card Holder Name" value="user" required>
           <div class="invalid-feedback">Card holder field is required</div>
         </div>
       </div>
@@ -72,7 +78,8 @@
     <p class="text-muted"><b>Tax: </b><span id="tax">{{formatPrice user.shoppingCart.tax}}</span></p>
     <p><b>Total: </b><span id="total">{{formatPrice user.shoppingCart.total}}</span></p>
     <div class="text-right">
-      <a class="btn btn-primary" onclick="checkout_clicked(event)" role="button" form="purchaseForm"> &nbsp;Checkout &nbsp;</a>
+      <a class="btn btn-primary" onclick="checkout_clicked(event)" role="button" form="purchaseForm"> &nbsp;Checkout
+        &nbsp;</a>
     </div>
     <br><br><br>
   </div>

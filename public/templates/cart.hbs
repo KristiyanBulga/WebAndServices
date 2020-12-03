@@ -1,11 +1,32 @@
 <script>
-    function buy_clicked(event, id, removeOne){
-        Model.delItem(id, removeOne);
+    function remOne(event, id) {
+        Model.removeOne(id)
+            .done(function () {
+                Messages.success.push(`Removed 1 book of id: `+id)
+                navigateTo('/cart', event);
+            })
+            .fail(function (error) {
+                Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
+                navigateTo('/cart', event);
+            });
+        navigateTo("/cart", event)
+    }
+    function remAll(event, id) {
+        Model.removeAll(id)
+            .done(function () {
+                Messages.success.push(`Removed all books of id: `+ id)
+                navigateTo('/cart', event);
+            })
+            .fail(function (error) {
+                Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
+                navigateTo('/cart', event);
+            });
         navigateTo("/cart", event)
     }
 </script>
 {{> navBar this}}
 {{> header this}}
+{{> messages this}}
 <main>
     <div class="container">
         <h2>Shopping cart</h2>
@@ -37,8 +58,8 @@
                                 <button class="btn btn-outline-danger dropdown-toggle btn-sm" type="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Remove</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" onclick="buy_clicked(event, {{id}}, 1)">One</a>
-                                    <a class="dropdown-item" onclick="buy_clicked(event, {{id}}, 0)">All</a>
+                                    <a class="dropdown-item" onclick="remOne(event, {{product}})">One</a>
+                                    <a class="dropdown-item" onclick="remAll(event, {{product}})">All</a>
                                 </div>
                             </div>
                         </div>
