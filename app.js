@@ -1,3 +1,27 @@
+// Import moongose
+var mongoose = require("mongoose");
+
+var uri = "mongodb://localhost/bookshop";
+mongoose.Promise = global.Promise;
+
+var db = mongoose.connection;
+db.on("connecting", function () {
+  console.log("Connecting to ", uri);
+});
+db.on("connected", function () {
+  console.log("Connected to ", uri);
+});
+db.on("disconnecting", function () {
+  console.log("Disconnecting from ", uri);
+});
+db.on("disconnected", function () {
+  console.log("Disconnected from ", uri);
+});
+db.on("error", function (err) {
+  console.error("Error ", err.message);
+});
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 // Import express module
 var express = require("express");
 
@@ -31,28 +55,30 @@ app.use(express.static(path.join(__dirname, "public")));
 // HTTP POST /api/users/signin
 // Tries to sign in the user
 app.post("/api/users/signin", function (req, res, next) {
-  var user = model.signin(req.body.email, req.body.password);
-  if (user) {
-    res.cookie("userid", user._id);
-    return res.json(user);
-  } else return res.status(401).send({ message: "Invalid email or password" });
+  return model.signin(req.body.email, req.body.password).then(function (user) {
+    if (user) {
+      res.cookie("userid", user._id);
+      return res.json(user);
+    } else return res.status(401).send({ message: "Invalid email or password" });
+  });
 });
 
 // HTTP POST /api/users/signup
 // Tries to sign up a new user
 app.post("/api/users/signup", function (req, res, next) {
-  var user = model.signup(
-    req.body.email,
-    req.body.password,
-    req.body.name,
-    req.body.surname,
-    req.body.birth,
-    req.body.address
-  );
-  if (user) {
-    res.cookie("userid", user._id);
-    return res.json(user);
-  } else return res.status(401).send({ message: "Email already exists!" });
+  return model
+    .signup(
+      req.body.name,
+      req.body.surname,
+      req.body.address,
+      req.body.birth,
+      req.body.email,
+      req.body.password
+    )
+    .then(function (user) {
+      if (user) return res.json(user);
+      else return res.status(401).send({ message: "Invalid email" });
+    });
 });
 
 // HTTP POST /api/cart/items/product/:id
@@ -60,10 +86,10 @@ app.post("/api/users/signup", function (req, res, next) {
 app.post("/api/cart/items/product/:id", function (req, res, next) {
   var pid = req.params.id;
   var uid = req.cookies.userid;
-  var cart = Model.buy(uid, pid);
-  if (cart) {
-    return res.json(cart);
-  } else return res.status(401).send({ message: "User or Product not found" });
+  return Model.buy(uid, pid).then(function (cart) {
+    if (cart) return res.json(cart);
+    else return res.status(401).send({ message: "User or Product not found" });
+  });
 });
 
 // HTTP POST /api/orders
@@ -94,12 +120,13 @@ app.get("/api/cart/qty", function (req, res, next) {
   var userid = req.cookies.userid;
   if (!userid)
     return res.status(401).send({ message: "User has not signed in" });
-  var userCartQty = model.getUserCartQty(userid);
-  if (userCartQty) return res.json(userCartQty);
-  else
-    return res
-      .status(500)
-      .send({ message: "Cannot retrieve user cart quantity" });
+  return model.getUserCartQty(userid).then(function (userCartQty) {
+    if (userCartQty) return res.json(userCartQty);
+    else
+      return res
+        .status(500)
+        .send({ message: "Cannot retrieve user cart quantity" });
+  });
 });
 
 // HTTP GET /api/cart
@@ -133,7 +160,7 @@ app.get("/api/orders", function (req, res, next) {
 });
 
 // HTTP GET /api/orders/id/:id
-// Obtain the order with :id 
+// Obtain the order with :id
 app.get("/api/orders/id/:id", function (req, res, next) {
   var oid = req.params.id;
   var uid = req.cookies.userid;

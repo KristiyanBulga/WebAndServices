@@ -1,3 +1,5 @@
+var User = require("./user");
+var Cart = require("./shopping-cart");
 Model = {};
 Model.products = [
   {
@@ -129,14 +131,7 @@ Model.users = [
 // Functions
 // If user exists, it is signed in
 Model.signin = function (email, password) {
-  Model.user = null;
-  for (var user of this.users) {
-    if (user.email == email && user.password == password) {
-      this.user = user;
-      console.log("Logged as " + user.name);
-    }
-  }
-  return Model.user;
+  return User.findOne({ email, password });
 };
 
 // This function signs out from the server side
@@ -145,40 +140,39 @@ Model.signout = function () {
 };
 
 // This function tries to sign up a new user
-Model.signup = function (email, password, name, surname, birth, address) {
-  newId = this.findEmail(email);
-  if (newId) {
-    var user = {
-      _id: newId,
-      email: email,
-      password: password,
-      name: name,
-      surname: surname,
-      birth: birth,
-      address: address,
-      shoppingCart: { items: [], qty: 0, total: 0, subtotal: 0, tax: 0 },
-      orders: [],
-    };
-    this.users.push(user);
-    return this.signin(email, password);
-  } else {
-    return null;
-  }
+Model.signup = function (name, surname, address, birth, email, password) {
+  return User.findOne({ email }).then(function (user) {
+    if (!user) {
+      var cart = new Cart({ items: [], qty: 0, total: 0, subtotal: 0, tax: 0 });
+      var user = new User({
+        email,
+        password,
+        name,
+        surname,
+        birth,
+        address,
+        shoppingCart: cart,
+      });
+      return cart.save().then(function () {
+        return user.save();
+      });
+    } else return null;
+  });
 };
 
-Model.findEmail = function (email) {
-  id_max = 0;
-  for (var user of this.users) {
-    if (user.email == email) {
-      console.log("Email already registered");
-      return 0;
-    }
-    if (user._id > id_max) {
-      id_max = user._id;
-    }
-  }
-  return id_max + 1;
-};
+// Model.findEmail = function (email) {
+//   id_max = 0;
+//   for (var user of this.users) {
+//     if (user.email == email) {
+//       console.log("Email already registered");
+//       return 0;
+//     }
+//     if (user._id > id_max) {
+//       id_max = user._id;
+//     }
+//   }
+//   return id_max + 1;
+// };
 
 // Obtain the user object
 Model.getUserById = function (userid) {
@@ -188,11 +182,16 @@ Model.getUserById = function (userid) {
   return null;
 };
 
+Model.getUserByIdWithCart = function (userid) {
+  return User.findById(userid).populate("shoppingCart");
+};
+
 // Return the user's cart qty
 Model.getUserCartQty = function (userid) {
-  var user = Model.getUserById(userid);
-  if (user) return { shoppingCart: { qty: user.shoppingCart.qty } };
-  else return null;
+  return User.findById(userid).populate({
+    path: "shoppingCart",
+    select: "qty",
+  });
 };
 
 // Return the product with id: pid
@@ -204,27 +203,30 @@ Model.getProductById = function (pid) {
 
 // Add product to the user's cart
 Model.buy = function (uid, pid) {
-  var product = Model.getProductById(pid);
-  var user = Model.getUserById(uid);
-  if (user && product) {
-    var item;
-    for (var i = 0; i < user.shoppingCart.items.length; i++) {
-      if (user.shoppingCart.items[i].product == pid)
-        item = user.shoppingCart.items[i];
-    }
-    if (!item) {
-      item = { qty: 0, product: product.title };
-      user.shoppingCart.items.push(item);
-    }
-    item.qty++;
-    item.product = product._id;
-    item.title = product.title;
-    item.price = product.price;
-    item.total = item.qty * item.price;
-    this.updateShoppingCart(user);
-    return product;
-  } else return null;
-};
+  return Promise.all([Model.getProductById(pid), Model.getUserByIdWithCart(uid)])
+    .then(function (results) {
+      var product = results[0];
+      var user = results[1];
+      if (user && product) {
+        var item = null;
+        for (var i = 0; i < user.shoppingCart.items.length; i++) {
+          if (user.shoppingCart.items[i].product == pid) {
+            item = user.shoppingCart.items[i];
+            user.shoppingCart.items.remove(item);
+          }
+        }
+        if (!item) { item = { qty: 0 }; }
+        item.qty++;
+        item.title = product.title;        
+        item.price = product.price;
+        item.total = item.qty * item.price;
+        user.shoppingCart.items.push(item);
+        Model.updateShoppingCart(user);
+        return user.shoppingCart.save()
+          .then(function (result) { return result });
+      } else return null;
+    }).catch(function (errors) { console.error(errors); return null; })
+}
 
 // Update the shopping cart info
 Model.updateShoppingCart = function (user) {
