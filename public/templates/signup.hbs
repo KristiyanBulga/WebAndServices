@@ -8,7 +8,9 @@
         Model.signup($('#email').val(), $('#password').val(), $('#name').val(), $('#surname').val(), $('#birth').val(), $('#address').val()).done(function (user) {
           Model.user = user;
           Messages.success.push(`Welcome for first time ${user.name} ${user.surname}`)
-          navigateTo('/', event);
+          Model.signin(user.email, user.password).done(function () {
+            navigateTo('/', event); 
+          })
         }).fail(function (error) {
           Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
           Model.lastSignup = {

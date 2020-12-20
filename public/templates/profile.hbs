@@ -43,16 +43,16 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col">
-            {{date}}
+            {{formatDate date}}
           </div>
           <div class="col">
-            {{_number}}
+            {{number}}
           </div>
           <div class="col">
             {{formatPrice total}}
           </div>
           <div class="col">
-            <a class="btn btn-primary" onclick="navigateTo('/order/id/{{_number}}', event)"> &nbsp;Details&nbsp;</a>
+            <a class="btn btn-primary" onclick="navigateTo('/order/id/{{number}}', event)"> &nbsp;Details&nbsp;</a>
           </div>
         </div>
       </li>

@@ -77,7 +77,7 @@
       });
       Handlebars.registerHelper("formatDate", function (date) {
         var aux = String(date).split("-");
-        return aux[1] + "/" + aux[2] + "/" + aux[0];
+        return aux[1] + "/" + aux[2].substring(0, 2) + "/" + aux[0];
       });
     </script>
 
