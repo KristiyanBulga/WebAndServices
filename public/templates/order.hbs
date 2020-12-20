@@ -3,10 +3,10 @@
 {{> messages this}}
 <main>
   <div class="container">
-    <h2>Order {{orderShown._number}}</h2>
+    <h2>Order {{orderShown.number}}</h2>
     <div class="row">
       <div class="col-12">
-        <p><b>Date: </b><span id="orderDate">{{orderShown.date}}</span></p>
+        <p><b>Date: </b><span id="orderDate">{{formatDate orderShown.date}}</span></p>
       </div>
       <div class="col-12">
         <p><b>Address: </b><span id="orderAddress">{{orderShown.address}}</span></p>

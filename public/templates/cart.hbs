@@ -9,7 +9,6 @@
                 Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
                 navigateTo('/cart', event);
             });
-        navigateTo("/cart", event)
     }
     function remAll(event, id) {
         Model.removeAll(id)
@@ -21,7 +20,6 @@
                 Messages.danger.push(`${error.statusText} (${error.status}): ${error.responseJSON.message}`);
                 navigateTo('/cart', event);
             });
-        navigateTo("/cart", event)
     }
 </script>
 {{> navBar this}}
@@ -58,8 +56,8 @@
                                 <button class="btn btn-outline-danger dropdown-toggle btn-sm" type="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Remove</button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" onclick="remOne(event, {{product}})">One</a>
-                                    <a class="dropdown-item" onclick="remAll(event, {{product}})">All</a>
+                                    <a class="dropdown-item" onclick="remOne(event, '{{product}}')">One</a>
+                                    <a class="dropdown-item" onclick="remAll(event, '{{product}}')">All</a>
                                 </div>
                             </div>
                         </div>
