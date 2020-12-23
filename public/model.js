@@ -15,18 +15,16 @@ Model.signin = function (email, password) {
 };
 
 // obtains the user from cookie
-Model.getUserId = function () {
+Model.getToken = function () {
   var decoded = decodeURIComponent(document.cookie);
-  return decoded.substring(7, decoded.length);
+  return decoded.substring(6, decoded.length);
 };
 
 // Signout and delete from the cookie
 // We do not sign out from the server, only in the client side
 Model.signout = function () {
-  //Model.user = null;
-  document.cookie = "userid=;expires=0;path=/;";
+  document.cookie = "token=;expires=0;path=/;";
 };
-
 // Perform a POST with the product id to add it to the user's shopping cart
 Model.buy = function (pid) {
   return $.ajax({ url: "/api/cart/items/product/" + pid, method: "POST" });
@@ -34,7 +32,13 @@ Model.buy = function (pid) {
 
 // Perform a GET request to obtain the user's shopping cart qty
 Model.getUserCartQty = function () {
-  return $.ajax({ url: "/api/cart/qty", method: "GET" });
+  return $.ajax({
+    url: "/api/cart/qty",
+    method: "GET",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Authorization", "Bearer " + Model.getToken());
+    },
+  });
 };
 
 // Perform a GET request to obtain the user's shopping cart
