@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var bcryptjs = require("bcryptjs");
 var User = require("./user");
 var Cart = require("./shopping-cart");
 var Product = require("./product");
@@ -35,6 +36,9 @@ var user = new User({
   address: "Albacete",
   shoppingCart: cart,
 });
+
+user.password = bcryptjs.hashSync("admin", bcryptjs.genSaltSync(10));
+
 var products = [
   {
     title: "Percy Jackson and the lightning thief",
@@ -142,10 +146,10 @@ mongoose
   .then(function () {
     return User.deleteMany();
   })
-  .then(function(){
+  .then(function () {
     return Product.deleteMany();
   })
-  .then(function(){
+  .then(function () {
     return Order.deleteMany();
   })
   .then(function () {
@@ -154,6 +158,14 @@ mongoose
   .then(function () {
     return user.save();
   })
+  .then(function (result) {
+    console.log(result);
+    return result;
+  })
+  .then(function (result) {
+    console.log(bcryptjs.compareSync("admin", result.password));
+  })
+
   .then(function () {
     return Product.insertMany(products);
   })
